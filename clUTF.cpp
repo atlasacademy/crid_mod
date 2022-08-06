@@ -1,11 +1,11 @@
 
 //--------------------------------------------------
-// ƒCƒ“ƒNƒ‹[ƒh
+// ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 //--------------------------------------------------
 #include "clUTF.h"
 
 //--------------------------------------------------
-// ƒCƒ“ƒ‰ƒCƒ“ŠÖ”
+// ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³é–¢æ•°
 //--------------------------------------------------
 inline short bswap(short v){short r=v&0xFF;r<<=8;v>>=8;r|=v&0xFF;return r;}
 inline unsigned short bswap(unsigned short v){unsigned short r=v&0xFF;r<<=8;v>>=8;r|=v&0xFF;return r;}
@@ -16,51 +16,51 @@ inline unsigned long long bswap(unsigned long long v){unsigned long long r=v&0xF
 inline float bswap(float v){unsigned int i=bswap(*(unsigned int *)&v);return *(float *)&i;}
 
 //--------------------------------------------------
-// ƒtƒ@ƒCƒ‹ƒ[ƒh
+// ãƒ•ã‚¡ã‚¤ãƒ«ãƒ­ãƒ¼ãƒ‰
 //--------------------------------------------------
 unsigned char *LoadFile(const char *filename,int *fileSize=NULL){
 
-	// ƒ`ƒFƒbƒN
+	// ãƒã‚§ãƒƒã‚¯
 	if(!filename)return NULL;
 
-	// ŠJ‚­
+	// é–‹ã
 	FILE *fp;
 	if(fopen_s(&fp,filename,"rb"))return NULL;
 
-	// ƒTƒCƒY‚ğæ“¾
+	// ã‚µã‚¤ã‚ºã‚’å–å¾—
 	fseek(fp,0,SEEK_END);
 	int size=ftell(fp);
 
-	// Šm•Û
+	// ç¢ºä¿
 	unsigned char *data=new unsigned char [size+1];
 	if(!data){fclose(fp);return NULL;}
 
-	// “Ç‚İ‚İ
+	// èª­ã¿è¾¼ã¿
 	fseek(fp,0,SEEK_SET);
 	fread(data,size,1,fp);
 	data[size]='\0';
 
-	// •Â‚¶‚é
+	// é–‰ã˜ã‚‹
 	fclose(fp);
 
-	// ƒTƒCƒYİ’è
+	// ã‚µã‚¤ã‚ºè¨­å®š
 	if(fileSize)*fileSize=size;
 
 	return data;
 }
 
 //--------------------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^/ƒfƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿/ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------
 clUTF::clUTF():_string(NULL),_data(NULL),_name(NULL),_pageCount(0),_page(NULL){}
 clUTF::~clUTF(){Release();}
 
 //--------------------------------------------------
-// ŠJ•ú
+// é–‹æ”¾
 //--------------------------------------------------
 void clUTF::Release(void){
 
-	// ŠJ•ú
+	// é–‹æ”¾
 	if(_string)delete [] _string;
 	if(_data)delete [] _data;
 	for(unsigned int i=0;i<_pageCount;i++){
@@ -71,7 +71,7 @@ void clUTF::Release(void){
 	}
 	if(_page)delete [] _page;
 
-	// ƒŠƒZƒbƒg
+	// ãƒªã‚»ãƒƒãƒˆ
 	_string=NULL;
 	_data=NULL;
 	_name=NULL;
@@ -81,47 +81,47 @@ void clUTF::Release(void){
 }
 
 //--------------------------------------------------
-// UTFƒtƒ@ƒCƒ‹‚©ƒ`ƒFƒbƒN
+// UTFãƒ•ã‚¡ã‚¤ãƒ«ã‹ãƒã‚§ãƒƒã‚¯
 //--------------------------------------------------
 bool clUTF::CheckFile(void *data,unsigned int size){
 	return (data&&size>=4&&*(unsigned int *)data==0x46545540);
 }
 
 //--------------------------------------------------
-// ƒtƒ@ƒCƒ‹‚ğƒ[ƒh
+// ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ­ãƒ¼ãƒ‰
 //--------------------------------------------------
 bool clUTF::LoadFile(const char *filename){
 
-	// ŠJ•ú
+	// é–‹æ”¾
 	Release();
 
-	// ƒtƒ@ƒCƒ‹‚ğƒ[ƒh
+	// ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ­ãƒ¼ãƒ‰
 	unsigned char *data=::LoadFile(filename);
 	if(!data)return false;
 
-	// ‰ğÍ
+	// è§£æ
 	if(!LoadData(data)){delete [] data;return false;}
 
-	// ŠJ•ú
+	// é–‹æ”¾
 	delete [] data;
 
 	return true;
 }
 bool clUTF::LoadData(void *data){
 
-	// ŠJ•ú
+	// é–‹æ”¾
 	Release();
 
-	// ƒ`ƒFƒbƒN
+	// ãƒã‚§ãƒƒã‚¯
 	if(!data)return false;
 
-	// ƒwƒbƒ_‚ğæ“¾
+	// ãƒ˜ãƒƒãƒ€ã‚’å–å¾—
 	stHeader *header=(stHeader *)data;
 	if(!CheckFile(header,sizeof(*header)))return false;
 	//header->signature=bswap(header->signature);
 	header->dataSize=bswap(header->dataSize);
 
-	// î•ñ‚ğæ“¾
+	// æƒ…å ±ã‚’å–å¾—
 	stInfo *info=(stInfo *)((unsigned char *)data+sizeof(stHeader));
 	info->valueOffset=bswap(info->valueOffset);
 	info->stringOffset=bswap(info->stringOffset);
@@ -131,20 +131,20 @@ bool clUTF::LoadData(void *data){
 	info->valueSize=bswap(info->valueSize);
 	info->valueCount=bswap(info->valueCount);
 
-	// •¶š—ñ‚ğæ“¾
+	// æ–‡å­—åˆ—ã‚’å–å¾—
 	_string=new char [info->dataOffset-info->stringOffset];
 	if(!_string)return false;
 	memcpy(_string,(unsigned char *)data+sizeof(stHeader)+info->stringOffset,info->dataOffset-info->stringOffset);
 
-	// ƒf[ƒ^‚ğæ“¾
+	// ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
 	_data=new unsigned char [header->dataSize-info->dataOffset];
 	if(!_data)return false;
 	memcpy(_data,(unsigned char *)data+sizeof(stHeader)+info->dataOffset,header->dataSize-info->dataOffset);
 
-	// –¼‘O‚ğæ“¾
+	// åå‰ã‚’å–å¾—
 	_name=&_string[info->nameOffset];
 
-	// €–Ú‚ğæ“¾
+	// é …ç›®ã‚’å–å¾—
 	unsigned char null[]={0,0,0,0,0,0,0,0};
 	_pageCount=info->valueCount;
 	_page=new stPage [info->valueCount];
@@ -186,35 +186,35 @@ bool clUTF::LoadData(void *data){
 }
 
 //--------------------------------------------------
-// •Û‘¶
+// ä¿å­˜
 //--------------------------------------------------
 //bool clUTF::SaveFile(const char *filename){
-//	return false;//–¢À‘•@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//	return false;//æœªå®Ÿè£…@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //}
 
 //--------------------------------------------------
-// •Û‘¶
+// ä¿å­˜
 //--------------------------------------------------
 bool clUTF::SaveFileINI(const char *filename,bool subUTF){
 
-	// ƒ`ƒFƒbƒN
+	// ãƒã‚§ãƒƒã‚¯
 	if(!(filename))return false;
 
-	// ŠJ‚­
+	// é–‹ã
 	FILE *fp;
 	if(fopen_s(&fp,filename,"wb"))return false;
 
-	// •Û‘¶
+	// ä¿å­˜
 	SaveFileINI(fp,subUTF);
 
-	// •Â‚¶‚é
+	// é–‰ã˜ã‚‹
 	fclose(fp);
 
 	return false;
 }
 bool clUTF::SaveFileINI(FILE *fp,bool subUTF,int tab){
 
-	// ƒ`ƒFƒbƒN
+	// ãƒã‚§ãƒƒã‚¯
 	if(!fp)return false;
 
 	//
@@ -254,7 +254,7 @@ bool clUTF::SaveFileINI(FILE *fp,bool subUTF,int tab){
 }
 
 //--------------------------------------------------
-// ’Ç‰Á
+// è¿½åŠ 
 //--------------------------------------------------
 clUTF::clElement *clUTF::Add(stPage *parent,const char *name){
 	if(!parent)return NULL;
@@ -329,7 +329,7 @@ clUTF::clElement *clUTF::Add(unsigned int pageIndex,const char *name,void *data,
 }
 
 //--------------------------------------------------
-// æ“¾
+// å–å¾—
 //--------------------------------------------------
 clUTF::clElement *clUTF::GetElement(unsigned int pageIndex){
 	static clElement null;

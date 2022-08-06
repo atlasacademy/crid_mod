@@ -1,21 +1,21 @@
 #pragma once
 
 //--------------------------------------------------
-// ƒCƒ“ƒNƒ‹[ƒh
+// ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 //--------------------------------------------------
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #include <stdio.h>
 
 //--------------------------------------------------
-// UTFƒNƒ‰ƒX
+// UTFã‚¯ãƒ©ã‚¹
 //--------------------------------------------------
 class clUTF{
 public:
 	class clElement{
 	public:
 		enum TYPE{
-			TYPE_NULL,       // ‹ó—v‘f
+			TYPE_NULL,       // ç©ºè¦ç´ 
 			TYPE_CHAR,       // char
 			TYPE_UCHAR,      // unsigned char
 			TYPE_SHORT,      // short
@@ -87,7 +87,7 @@ public:
 	clUTF();
 	~clUTF();
 
-	// ƒ[ƒh
+	// ãƒ­ãƒ¼ãƒ‰
 	static bool CheckFile(void *data,unsigned int size);
 	bool LoadFile(const char *filename);
 	bool LoadData(void *data);
@@ -96,7 +96,7 @@ public:
 	bool SaveFileINI(FILE *fp,bool subUTF=false,int tab=0);
 	void Release(void);
 
-	// —v‘f
+	// è¦ç´ 
 	clElement *Add(unsigned int pageIndex,const char *name,char value);
 	clElement *Add(unsigned int pageIndex,const char *name,unsigned char value);
 	clElement *Add(unsigned int pageIndex,const char *name,short value);
@@ -108,12 +108,12 @@ public:
 	clElement *Add(unsigned int pageIndex,const char *name,float value);
 	clElement *Add(unsigned int pageIndex,const char *name,char *value);
 	clElement *Add(unsigned int pageIndex,const char *name,void *data,unsigned int size);
-	
-	// æ“¾
+
+	// å–å¾—
 	const char *GetName(void){return _name;}
 	unsigned int GetPageCount(void){return _pageCount;}
-	clElement *GetElement(unsigned int pageIndex);                   // ¦Œ©‚Â‚©‚ç‚È‚¢ê‡ATYPE_NULL‚Ì—v‘f‚ª•Ô‚é
-	clElement *GetElement(unsigned int pageIndex,const char *name);  // ¦Œ©‚Â‚©‚ç‚È‚¢ê‡ATYPE_NULL‚Ì—v‘f‚ª•Ô‚é
+	clElement *GetElement(unsigned int pageIndex);                   // â€»è¦‹ã¤ã‹ã‚‰ãªã„å ´åˆã€TYPE_NULLã®è¦ç´ ãŒè¿”ã‚‹
+	clElement *GetElement(unsigned int pageIndex,const char *name);  // â€»è¦‹ã¤ã‹ã‚‰ãªã„å ´åˆã€TYPE_NULLã®è¦ç´ ãŒè¿”ã‚‹
 
 private:
 	struct stHeader{

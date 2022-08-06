@@ -1,13 +1,13 @@
 
 //--------------------------------------------------
-// ƒCƒ“ƒNƒ‹[ƒh
+// ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 //--------------------------------------------------
 #include "clADX.h"
 #include <stdio.h>
 #include <memory.h>
 
 //--------------------------------------------------
-// ƒCƒ“ƒ‰ƒCƒ“ŠÖ”
+// ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³é–¢æ•°
 //--------------------------------------------------
 inline short bswap(short v)
 {
@@ -112,7 +112,7 @@ inline float bswap(float v)
 }
 
 //--------------------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------
 clADX::clADX() : _data(NULL)
 {
@@ -120,7 +120,7 @@ clADX::clADX() : _data(NULL)
 }
 
 //--------------------------------------------------
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------
 clADX::~clADX()
 {
@@ -132,7 +132,7 @@ clADX::~clADX()
 }
 
 //--------------------------------------------------
-// ADXƒ`ƒFƒbƒN
+// ADXãƒã‚§ãƒƒã‚¯
 //--------------------------------------------------
 bool clADX::CheckFile(void *data)
 {
@@ -140,16 +140,16 @@ bool clADX::CheckFile(void *data)
 }
 
 //--------------------------------------------------
-// ƒfƒR[ƒh
+// ãƒ‡ã‚³ãƒ¼ãƒ‰
 //--------------------------------------------------
 bool clADX::Decode(const char *filename, const char *filenameWAV)
 {
 
-	// ƒ`ƒFƒbƒN
+	// ãƒã‚§ãƒƒã‚¯
 	if (!(filename && filenameWAV))
 		return false;
 
-	// ŠJ‚­
+	// é–‹ã
 	FILE *fp, *fp2;
 	if (fopen_s(&fp, filename, "rb"))
 		return false;
@@ -191,7 +191,7 @@ bool clADX::Decode(const char *filename, const char *filenameWAV)
 	}
 	delete[] data;
 
-	// •Â‚¶‚é
+	// é–‰ã˜ã‚‹
 	fclose(fp);
 	fclose(fp2);
 
@@ -199,22 +199,22 @@ bool clADX::Decode(const char *filename, const char *filenameWAV)
 }
 
 //--------------------------------------------------
-// ƒfƒR[ƒh
+// ãƒ‡ã‚³ãƒ¼ãƒ‰
 //--------------------------------------------------
 bool clADX::Decode(FILE *fp, void *data, int size, unsigned int address)
 {
 
-	// ƒ`ƒFƒbƒN
+	// ãƒã‚§ãƒƒã‚¯
 	if (!(fp && data))
 		return false;
 
-	// ƒwƒbƒ_
+	// ãƒ˜ãƒƒãƒ€
 	if (address == 0)
 	{
 		if (size < sizeof(_header))
 			return false;
 
-		// ƒwƒbƒ_‚ğæ“¾
+		// ãƒ˜ãƒƒãƒ€ã‚’å–å¾—
 		memcpy(&_header, data, sizeof(_header));
 		if (!CheckFile(&_header))
 			return false;
@@ -223,7 +223,7 @@ bool clADX::Decode(FILE *fp, void *data, int size, unsigned int address)
 		_header.samplingRate = bswap(_header.samplingRate);
 		_header.sampleCount = bswap(_header.sampleCount);
 
-		// WAVEƒwƒbƒ_‚ğ‘‚«‚İ
+		// WAVEãƒ˜ãƒƒãƒ€ã‚’æ›¸ãè¾¼ã¿
 		struct stWAVEHeader
 		{
 			char riff[4];
@@ -257,7 +257,7 @@ bool clADX::Decode(FILE *fp, void *data, int size, unsigned int address)
 		memset(_data, 0, sizeof(int) * 32 * _header.channelCount);
 	}
 
-	// ƒf[ƒ^
+	// ãƒ‡ãƒ¼ã‚¿
 	else if (address >= _header.dataOffset && _data)
 	{
 		for (unsigned char *s = (unsigned char *)data, *e = s + size - 18 * _header.channelCount; s <= e;)
@@ -292,7 +292,7 @@ bool clADX::Decode(FILE *fp, void *data, int size, unsigned int address)
 }
 
 //--------------------------------------------------
-// ƒfƒR[ƒh ¦ŒŸØ’†
+// ãƒ‡ã‚³ãƒ¼ãƒ‰ â€»æ¤œè¨¼ä¸­
 //--------------------------------------------------
 void clADX::Decode(int *d, unsigned char *s)
 {

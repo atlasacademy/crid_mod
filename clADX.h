@@ -1,35 +1,35 @@
 #pragma once
 
 //--------------------------------------------------
-// ƒCƒ“ƒNƒ‹[ƒh
+// ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 //--------------------------------------------------
 #include <stdio.h>
 
 //--------------------------------------------------
-// ADXƒNƒ‰ƒX
+// ADXã‚¯ãƒ©ã‚¹
 //--------------------------------------------------
 class clADX{
 public:
 	clADX();
 	~clADX();
 
-	// ƒ`ƒFƒbƒN
+	// ãƒã‚§ãƒƒã‚¯
 	static bool CheckFile(void *data);
 
-	// ƒfƒR[ƒh
+	// ãƒ‡ã‚³ãƒ¼ãƒ‰
 	bool Decode(const char *filename,const char *filenameWAV);
 	bool Decode(FILE *fp,void *data,int size,unsigned int address);
 
 private:
 	struct stHeader{
-		unsigned short signature;    // ƒVƒOƒlƒ`ƒƒ 0x8000
-		unsigned short dataOffset;   // ƒf[ƒ^ƒIƒtƒZƒbƒg(ƒwƒbƒ_ƒTƒCƒY)-4
-		unsigned char r04;           // ƒo[ƒWƒ‡ƒ“H 3
-		unsigned char r05;           // ƒuƒƒbƒNƒTƒCƒYH 18
-		unsigned char r06;           // H 4
-		unsigned char channelCount;  // ƒ`ƒƒƒ“ƒlƒ‹”
-		unsigned int samplingRate;   // ƒTƒ“ƒvƒŠƒ“ƒOƒŒ[ƒg
-		unsigned int sampleCount;    // ‡ŒvƒTƒ“ƒvƒ‹”
+		unsigned short signature;    // ã‚·ã‚°ãƒãƒãƒ£ 0x8000
+		unsigned short dataOffset;   // ãƒ‡ãƒ¼ã‚¿ã‚ªãƒ•ã‚»ãƒƒãƒˆ(ãƒ˜ãƒƒãƒ€ã‚µã‚¤ã‚º)-4
+		unsigned char r04;           // ãƒãƒ¼ã‚¸ãƒ§ãƒ³ï¼Ÿ 3
+		unsigned char r05;           // ãƒ–ãƒ­ãƒƒã‚¯ã‚µã‚¤ã‚ºï¼Ÿ 18
+		unsigned char r06;           // ï¼Ÿ 4
+		unsigned char channelCount;  // ãƒãƒ£ãƒ³ãƒãƒ«æ•°
+		unsigned int samplingRate;   // ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°ãƒ¬ãƒ¼ãƒˆ
+		unsigned int sampleCount;    // åˆè¨ˆã‚µãƒ³ãƒ—ãƒ«æ•°
 		unsigned char r10;
 		unsigned char r11;
 		unsigned char r12;
@@ -40,7 +40,7 @@ private:
 		unsigned short r1C;
 		unsigned short r1E;
 	};
-	struct stInfo{//channelCount‚ª3ˆÈã‚Ì‚É(channelCount-2)‰ñ•ª‘¶İ
+	struct stInfo{//channelCountãŒ3ä»¥ä¸Šã®æ™‚ã«(channelCount-2)å›åˆ†å­˜åœ¨
 		unsigned short r00;
 		unsigned short r02;
 	};

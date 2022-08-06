@@ -1,6 +1,6 @@
 
 //--------------------------------------------------
-// ƒCƒ“ƒNƒ‹[ƒh
+// ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 //--------------------------------------------------
 #include "clCRID.h"
 #include "clADX.h"
@@ -9,7 +9,7 @@
 #endif
 
 //--------------------------------------------------
-// ƒCƒ“ƒ‰ƒCƒ“ŠÖ”
+// ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³é–¢æ•°
 //--------------------------------------------------
 inline short bswap(short v){short r=v&0xFF;r<<=8;v>>=8;r|=v&0xFF;return r;}
 inline unsigned short bswap(unsigned short v){unsigned short r=v&0xFF;r<<=8;v>>=8;r|=v&0xFF;return r;}
@@ -21,7 +21,7 @@ inline float bswap(float v){unsigned int i=bswap(*(unsigned int *)&v);return *(f
 inline WCHAR bswap(WCHAR v){short r=v&0xFF;r<<=8;v>>=8;r|=v&0xFF;return r;}
 
 //--------------------------------------------------
-// Šg’£q‚ğæ“¾
+// æ‹¡å¼µå­ã‚’å–å¾—
 //--------------------------------------------------
 char *GetExtension(char *extension,int size,const char *path){
 	if(size>0)extension[0]='\0';
@@ -37,21 +37,21 @@ char *GetExtension(char *extension,int size,const char *path){
 }
 
 //--------------------------------------------------
-// ƒtƒ@ƒCƒ‹–¼‚Ég‚¦‚È‚¢•¶š‚ğ‘å•¶š‚É•ÏX
+// ãƒ•ã‚¡ã‚¤ãƒ«åã«ä½¿ãˆãªã„æ–‡å­—ã‚’å¤§æ–‡å­—ã«å¤‰æ›´
 //--------------------------------------------------
 char *FixFilename(char *fix_filename,int size,const char *filename){
 	memset(fix_filename,0,size);
 	for(int i=0,len=strlen(filename);i<len&&i<size-3;i++,filename++){
 		switch(*filename){
-		case '*':*(WCHAR *)&fix_filename[i++]=bswap((WCHAR)'–');break;
-		case '|':*(WCHAR *)&fix_filename[i++]=bswap((WCHAR)'b');break;
-		case '\\':*(WCHAR *)&fix_filename[i++]=bswap((WCHAR)'');break;
-		case ':':*(WCHAR *)&fix_filename[i++]=bswap((WCHAR)'F');break;
-		case '"':*(WCHAR *)&fix_filename[i++]=bswap((WCHAR)'h');break;
-		case '<':*(WCHAR *)&fix_filename[i++]=bswap((WCHAR)'ƒ');break;
-		case '>':*(WCHAR *)&fix_filename[i++]=bswap((WCHAR)'„');break;
-		case '?':*(WCHAR *)&fix_filename[i++]=bswap((WCHAR)'H');break;
-		case '/':*(WCHAR *)&fix_filename[i++]=bswap((WCHAR)'^');break;
+		case '*':*(WCHAR *)&fix_filename[i++]=bswap((WCHAR)'ï¼Š');break;
+		case '|':*(WCHAR *)&fix_filename[i++]=bswap((WCHAR)'ï½œ');break;
+		case '\\':*(WCHAR *)&fix_filename[i++]=bswap((WCHAR)'ï¿¥');break;
+		case ':':*(WCHAR *)&fix_filename[i++]=bswap((WCHAR)'ï¼š');break;
+		case '"':*(WCHAR *)&fix_filename[i++]=bswap((WCHAR)'â€');break;
+		case '<':*(WCHAR *)&fix_filename[i++]=bswap((WCHAR)'ï¼œ');break;
+		case '>':*(WCHAR *)&fix_filename[i++]=bswap((WCHAR)'ï¼');break;
+		case '?':*(WCHAR *)&fix_filename[i++]=bswap((WCHAR)'ï¼Ÿ');break;
+		case '/':*(WCHAR *)&fix_filename[i++]=bswap((WCHAR)'ï¼');break;
 		default:fix_filename[i]=*filename;break;
 		}
 	}
@@ -59,32 +59,32 @@ char *FixFilename(char *fix_filename,int size,const char *filename){
 }
 
 //--------------------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------
 clCRID::clCRID(unsigned int ciphKey1,unsigned int ciphKey2):_utf(){
 	InitMask(ciphKey1,ciphKey2);
 }
 
 //--------------------------------------------------
-// CRIDƒtƒ@ƒCƒ‹ƒ`ƒFƒbƒN
+// CRIDãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚§ãƒƒã‚¯
 //--------------------------------------------------
 bool clCRID::CheckFile(void *data,unsigned int size){
 	return (data&&size>=4&&*(unsigned int *)data==0x44495243);
 }
 
 //--------------------------------------------------
-// ƒtƒ@ƒCƒ‹‚ğƒ[ƒh
+// ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ­ãƒ¼ãƒ‰
 //--------------------------------------------------
 bool clCRID::LoadFile(const char *filename){
 
-	// ƒ`ƒFƒbƒN
+	// ãƒã‚§ãƒƒã‚¯
 	if(!(filename))return false;
 
-	// ŠJ‚­
+	// é–‹ã
 	FILE *fp;
 	if(fopen_s(&fp,filename,"rb"))return false;
 
-	// ƒwƒbƒ_‚ğæ“¾
+	// ãƒ˜ãƒƒãƒ€ã‚’å–å¾—
 	stInfo info;
 	fread(&info,sizeof(info),1,fp);
 	if(!CheckFile(&info,sizeof(info))){fclose(fp);return false;}
@@ -96,21 +96,21 @@ bool clCRID::LoadFile(const char *filename){
 	//info.r18=bswap(info.r18);
 	//info.r1C=bswap(info.r1C);
 
-	// ƒf[ƒ^“Ç‚İ‚İ
+	// ãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿
 	unsigned int size=info.dataSize-info.dataOffset-info.paddingSize;
 	unsigned char *data=new unsigned char [size];
 	if(!data){fclose(fp);return false;}
 	fseek(fp,(int)info.dataOffset-0x18,SEEK_CUR);
 	fread(data,size,1,fp);
 
-	// UTFî•ñ‚ğ“Ç‚İ‚İ
+	// UTFæƒ…å ±ã‚’èª­ã¿è¾¼ã¿
 	if(info.dataType!=1||!_utf.LoadData(data)){
 		delete [] data;
 		fclose(fp);
 		return false;
 	}
 
-	// ŠJ•ú
+	// é–‹æ”¾
 	delete [] data;
 	fclose(fp);
 
@@ -118,33 +118,33 @@ bool clCRID::LoadFile(const char *filename){
 }
 
 //--------------------------------------------------
-// •ª—£
+// åˆ†é›¢
 //--------------------------------------------------
 bool clCRID::Demux(const char *filename,const char *directory, bool is_demux_video, bool is_demux_info, bool is_demux_audio, bool is_convert_adx, bool is_internal_names, int stream_id){
 
-	// ŠJ•ú
+	// é–‹æ”¾
 	_utf.Release();
 
-	// ƒ`ƒFƒbƒN
+	// ãƒã‚§ãƒƒã‚¯
 	if(!(filename&&directory))return false;
 
-	// ŠJ‚­
+	// é–‹ã
 	FILE *fp,*fpInfo=NULL,*fpVideo=NULL,*fpAudio=NULL;
 	if(fopen_s(&fp,filename,"rb"))return false;
 
-	// ƒ`ƒFƒbƒN
+	// ãƒã‚§ãƒƒã‚¯
 	stInfo info;
 	fread(&info,sizeof(info),1,fp);
 	if(!CheckFile(&info,sizeof(info))){fclose(fp);return false;}
 
-	// •ª—£
+	// åˆ†é›¢
 	clADX adx;unsigned int sfaAddress=0;
 	fseek(fp,0,SEEK_END);
 	int fileSize=ftell(fp);
 	fseek(fp,0,SEEK_SET);
 	while(fileSize>0){
 
-		// î•ñ‚ğæ“¾
+		// æƒ…å ±ã‚’å–å¾—
 		fread(&info,sizeof(info),1,fp);fileSize-=sizeof(info);
 		info.signature=bswap(info.signature);
 		info.dataSize=bswap(info.dataSize);
@@ -154,7 +154,7 @@ bool clCRID::Demux(const char *filename,const char *directory, bool is_demux_vid
 		//info.r18=bswap(info.r18);
 		//info.r1C=bswap(info.r1C);
 
-		// ƒf[ƒ^“Ç‚İ‚İ
+		// ãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿
 		unsigned int size=info.dataSize-info.dataOffset-info.paddingSize;
 		unsigned char *data=new unsigned char [size];
 		if(!data){
@@ -169,7 +169,7 @@ bool clCRID::Demux(const char *filename,const char *directory, bool is_demux_vid
 		fseek(fp,info.paddingSize,SEEK_CUR);
 		fileSize-=info.dataSize-0x18;
 
-		// í—Ş•Ê‚Éˆ—
+		// ç¨®é¡åˆ¥ã«å‡¦ç†
 		switch(info.signature){
 		case 0x43524944://CRID
 			{
@@ -199,7 +199,7 @@ bool clCRID::Demux(const char *filename,const char *directory, bool is_demux_vid
                                 else {
                                     sprintf_s(filename,_countof(filename),"%s.m2v",directory);
                                 }
-                                
+
 								fopen_s(&fpVideo,filename,"wb");
 							}
 							break;
@@ -272,12 +272,12 @@ bool clCRID::Demux(const char *filename,const char *directory, bool is_demux_vid
 		//default:__asm int 3;break;
 		}
 
-		// ŠJ•ú
+		// é–‹æ”¾
 		delete [] data;
 
 	}
 
-	// •Â‚¶‚é
+	// é–‰ã˜ã‚‹
 	fclose(fp);
 	if(fpVideo)fclose(fpVideo);
 	if(fpAudio)fclose(fpAudio);
@@ -287,18 +287,18 @@ bool clCRID::Demux(const char *filename,const char *directory, bool is_demux_vid
 }
 
 //--------------------------------------------------
-// ƒ}ƒ‹ƒ`ƒvƒŒƒNƒT
+// ãƒãƒ«ãƒãƒ—ãƒ¬ã‚¯ã‚µ
 //--------------------------------------------------
 bool clCRID::Mux(const char *filename,const char *filenameMovie,const char *filenameAudio){
-	return false;//–¢À‘•@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	return false;//æœªå®Ÿè£…@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 }
 
 //--------------------------------------------------
-// ƒ}ƒXƒN‰Šú‰»
+// ãƒã‚¹ã‚¯åˆæœŸåŒ–
 //--------------------------------------------------
 void clCRID::InitMask(unsigned int key1,unsigned int key2){
 
-	// ƒe[ƒuƒ‹‚ğ¶¬
+	// ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’ç”Ÿæˆ
 	unsigned char t[0x20];
 	t[0x00]=((unsigned char *)&key1)[0];
 	t[0x01]=((unsigned char *)&key1)[1];
@@ -333,7 +333,7 @@ void clCRID::InitMask(unsigned int key1,unsigned int key2){
 	t[0x1E]=t[0x05]-t[0x16];
 	t[0x1F]=t[0x1D]^t[0x13];
 
-	// ƒ}ƒXƒN‚ğ¶¬
+	// ãƒã‚¹ã‚¯ã‚’ç”Ÿæˆ
 	unsigned char t2[4]={'U','R','U','C'};
 	for(int i=0;i<0x20;i++){
 		_videoMask1[i]=t[i];
@@ -344,7 +344,7 @@ void clCRID::InitMask(unsigned int key1,unsigned int key2){
 }
 
 //--------------------------------------------------
-// ƒrƒfƒIƒ}ƒXƒN
+// ãƒ“ãƒ‡ã‚ªãƒã‚¹ã‚¯
 //--------------------------------------------------
 void clCRID::MaskVideo(unsigned char *data,int size){
 	data+=0x40;
@@ -363,7 +363,7 @@ void clCRID::MaskVideo(unsigned char *data,int size){
 }
 
 //--------------------------------------------------
-// ƒI[ƒfƒBƒIƒ}ƒXƒN
+// ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªãƒã‚¹ã‚¯
 //--------------------------------------------------
 void clCRID::MaskAudio(unsigned char *data,int size){
 	data+=0x140;
@@ -374,7 +374,7 @@ void clCRID::MaskAudio(unsigned char *data,int size){
 }
 
 //--------------------------------------------------
-// •¶š—ñ‚ğ‘‚«‚İ
+// æ–‡å­—åˆ—ã‚’æ›¸ãè¾¼ã¿
 //--------------------------------------------------
 void clCRID::WriteInfo(FILE *fp,const char *string){
 	if(fp&&string)fprintf(fp,"%s\r\n",string);
@@ -384,7 +384,7 @@ void clCRID::WriteInfo(FILE *fp,const char *string){
 // etc
 //--------------------------------------------------
 void clCRID::SetMaskAudioFromFile(FILE *mask){
-    
+
     unsigned int size = 0x20;
     unsigned char *data=new unsigned char [size];
     if(!data){

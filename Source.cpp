@@ -1,7 +1,7 @@
 //original by nyaga (?)
 //20190706 mod by bnnm
 //--------------------------------------------------
-// ƒCƒ“ƒNƒ‹[ƒh
+// ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 //--------------------------------------------------
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
@@ -41,15 +41,15 @@
     "-i [demux info]\n" \
     "-c [convert adx to wav instead of demuxing]\n" \
     "-s [audio stream chno id (starts from 0)]\n"
- #define MSG_DEMUXING   "%s ‚ğ•ª—£’†...\n"
- #define MSG_INPUT      "Error: “ü—Íƒtƒ@ƒCƒ‹‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢B\n"
- #define MSG_FAIL       "Error: •ª—£‚É¸”s‚µ‚Ü‚µ‚½B\n"
+ #define MSG_DEMUXING   "%s ã‚’åˆ†é›¢ä¸­...\n"
+ #define MSG_INPUT      "Error: å…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚\n"
+ #define MSG_FAIL       "Error: åˆ†é›¢ã«å¤±æ•—ã—ã¾ã—ãŸã€‚\n"
  #define MSG_FILE       "Error: file not found\n"
  #define MSG_OPTIONS    "Error: missing options\n"
 #endif
 
 //--------------------------------------------------
-// •¶š—ñ‚ğ16i”‚Æ‚İ‚È‚µ‚Ä”’l‚É•ÏŠ·
+// æ–‡å­—åˆ—ã‚’16é€²æ•°ã¨ã¿ãªã—ã¦æ•°å€¤ã«å¤‰æ›
 //--------------------------------------------------
 int atoi16(const char *s){
 	int r=0;
@@ -65,7 +65,7 @@ int atoi16(const char *s){
 }
 
 //--------------------------------------------------
-// ƒfƒBƒŒƒNƒgƒŠ‚ğæ“¾
+// ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’å–å¾—
 //--------------------------------------------------
 char *GetDirectory(char *directory,int size,const char *path){
 	if(size>0)directory[0]='\0';
@@ -81,26 +81,26 @@ char *GetDirectory(char *directory,int size,const char *path){
 }
 
 //--------------------------------------------------
-// ƒfƒBƒŒƒNƒgƒŠì¬
+// ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªä½œæˆ
 //--------------------------------------------------
 bool DirectoryCreate(const char *directory){
 
-	// ƒ`ƒFƒbƒN
+	// ãƒã‚§ãƒƒã‚¯
 	if(!(directory&&*directory))return false;
 
-	// ‘Š‘ÎƒpƒX(ƒfƒBƒŒƒNƒgƒŠ–¼‚Ì‚İ)
+	// ç›¸å¯¾ãƒ‘ã‚¹(ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªåã®ã¿)
 	if(!(strchr(directory,'\\')||strchr(directory,'/'))){
 		return _mkdir(directory)==0;
 	}
 
-	// ƒfƒBƒŒƒNƒgƒŠ–¼ƒ`ƒFƒbƒN
-	if(directory[1]!=':'||directory[2]!='\\')return false;  // ƒhƒ‰ƒCƒu‹Lq‚Ìƒ`ƒFƒbƒN
-	if(!directory[3])return false;                          // ƒhƒ‰ƒCƒuˆÈŠO‚Ì‹Lqƒ`ƒFƒbƒN
-	if(strpbrk(directory+3,"/,:;*<|>\""))return false;      // ƒfƒBƒŒƒNƒgƒŠ‹Ö~•¶š‚Ìƒ`ƒFƒbƒN
-	if(strstr(directory,"\\\\"))return false;               // ˜A‘±‚·‚é'\'‹L†‚Ìƒ`ƒFƒbƒN
-	if(strstr(directory," \\"))return false;                // ƒXƒy[ƒX‚ÌŒã‚Ì'\'‹L†‚Ìƒ`ƒFƒbƒN
+	// ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªåãƒã‚§ãƒƒã‚¯
+	if(directory[1]!=':'||directory[2]!='\\')return false;  // ãƒ‰ãƒ©ã‚¤ãƒ–è¨˜è¿°ã®ãƒã‚§ãƒƒã‚¯
+	if(!directory[3])return false;                          // ãƒ‰ãƒ©ã‚¤ãƒ–ä»¥å¤–ã®è¨˜è¿°ãƒã‚§ãƒƒã‚¯
+	if(strpbrk(directory+3,"/,:;*<|>\""))return false;      // ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªç¦æ­¢æ–‡å­—ã®ãƒã‚§ãƒƒã‚¯
+	if(strstr(directory,"\\\\"))return false;               // é€£ç¶šã™ã‚‹'\'è¨˜å·ã®ãƒã‚§ãƒƒã‚¯
+	if(strstr(directory," \\"))return false;                // ã‚¹ãƒšãƒ¼ã‚¹ã®å¾Œã®'\'è¨˜å·ã®ãƒã‚§ãƒƒã‚¯
 
-	// ƒfƒBƒŒƒNƒgƒŠì¬
+	// ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªä½œæˆ
 	if(_mkdir(directory)){
 		char current[0x400];
 		if(!GetDirectory(current,_countof(current),directory))return false;
@@ -112,11 +112,11 @@ bool DirectoryCreate(const char *directory){
 }
 
 //--------------------------------------------------
-// ƒƒCƒ“
+// ãƒ¡ã‚¤ãƒ³
 //--------------------------------------------------
 int main(int argc,char *argv[]){
 
-	// ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‰ğÍ
+	// ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³è§£æ
 	unsigned int count=0;
 	char *filenameOut=NULL;
 	unsigned int ciphKey1=0x207DFFFF;
@@ -129,7 +129,7 @@ int main(int argc,char *argv[]){
     bool is_convert_adx = false;
     bool is_internal_names = false;
     int stream_id = -1;
-    
+
 	for(int i=1;i<argc;i++){
 		if(argv[i][0]=='-'||argv[i][0]=='/'){
 			switch(argv[i][1]){
@@ -150,13 +150,13 @@ int main(int argc,char *argv[]){
 		}
 	}
 
-	// “ü—Íƒ`ƒFƒbƒN
+	// å…¥åŠ›ãƒã‚§ãƒƒã‚¯
 	if(!count){
         printf(MSG_HELP);
 		printf(MSG_INPUT);
 		return -1;
 	}
-    
+
     if (!is_demux_video && !is_demux_info && !is_demux_audio && !is_convert_adx) {
         printf(MSG_HELP);
 		printf(MSG_OPTIONS);
@@ -164,13 +164,13 @@ int main(int argc,char *argv[]){
     }
 
 
-	// •ª—£
+	// åˆ†é›¢
 	for(unsigned int i=0;i<count;i++){
 
-		// 2‚Â–ÚˆÈ~‚Ìƒtƒ@ƒCƒ‹‚ÍAo—Íƒtƒ@ƒCƒ‹–¼ƒIƒvƒVƒ‡ƒ“‚ª–³Œø
+		// 2ã¤ç›®ä»¥é™ã®ãƒ•ã‚¡ã‚¤ãƒ«ã¯ã€å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«åã‚ªãƒ—ã‚·ãƒ§ãƒ³ãŒç„¡åŠ¹
 		if(i)filenameOut=NULL;
 
-		// ƒfƒtƒHƒ‹ƒgo—Íƒtƒ@ƒCƒ‹–¼
+		// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«å
 		char path[0x400];
 		if(!(filenameOut&&filenameOut[0])){
 			strcpy_s(path,sizeof(path),argv[i]);
@@ -187,7 +187,7 @@ int main(int argc,char *argv[]){
         if (is_internal_names)
             DirectoryCreate(filenameOut);
 		clCRID crid(ciphKey1,ciphKey2);
-        
+
         FILE *fp;
         if (audiomask_name != NULL) {
             if(fopen_s(&fp,audiomask_name,"rb")) {
@@ -196,9 +196,9 @@ int main(int argc,char *argv[]){
             }
             crid.SetMaskAudioFromFile(fp);
             fclose(fp);
-        }            
+        }
 
-        
+
 		if(!crid.Demux(argv[i],filenameOut,is_demux_video,is_demux_info,is_demux_audio,is_convert_adx,is_internal_names,stream_id)){
 			printf(MSG_FAIL);
 		}

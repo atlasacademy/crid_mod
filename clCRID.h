@@ -1,26 +1,26 @@
 #pragma once
 
 //--------------------------------------------------
-// ƒCƒ“ƒNƒ‹[ƒh
+// ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 //--------------------------------------------------
 #include "clUTF.h"
 
 //--------------------------------------------------
-// CRIDƒNƒ‰ƒX
+// CRIDã‚¯ãƒ©ã‚¹
 //--------------------------------------------------
 class clCRID{
 public:
 	clCRID(unsigned int ciphKey1=0x207DFFFF,unsigned int ciphKey2=0x00B8F21B);
 
-	// ƒ[ƒh/ŠJ•ú
+	// ãƒ­ãƒ¼ãƒ‰/é–‹æ”¾
 	static bool CheckFile(void *data,unsigned int size);
 	bool LoadFile(const char *filename);
 
-	// •ª—£/ƒ}ƒ‹ƒ`ƒvƒŒƒNƒT
+	// åˆ†é›¢/ãƒãƒ«ãƒãƒ—ãƒ¬ã‚¯ã‚µ
 	bool Demux(const char *filename,const char *directory, bool is_demux_video, bool is_demux_info, bool is_demux_audio, bool is_convert_adx, bool is_internal_names, int stream_id);
 	bool Mux(const char *filename,const char *filenameMovie,const char *filenameAudio);
 
-	// æ“¾
+	// å–å¾—
 	unsigned int GetFileCount(void){return _utf.GetPageCount();}
 	const char *GetFilename(unsigned int index){return _utf.GetElement(index,"filename")->GetValueString();}
 
@@ -28,21 +28,21 @@ public:
 
 private:
 	struct stInfo{
-		unsigned int signature;      // ƒVƒOƒlƒ`ƒƒ 'CRID'
-		unsigned int dataSize;       // ƒf[ƒ^ƒTƒCƒY
-		unsigned char r08;           // •s–¾(0)
-		unsigned char dataOffset;    // ƒf[ƒ^ƒIƒtƒZƒbƒg
-		unsigned short paddingSize;  // ƒpƒfƒBƒ“ƒOƒTƒCƒY
-		unsigned char chno;          // •s–¾(0)
-		unsigned char r0D;           // •s–¾(0)
-		unsigned char r0E;           // •s–¾(0)
-		unsigned char dataType:2;    // ƒf[ƒ^‚Ìí—Ş 0:Data 1:UTF(ƒƒ^î•ñ) 2:Comment 3:UTF(ƒV[ƒNî•ñ)
-		unsigned char r0F_1:2;       // •s–¾(0)
-		unsigned char r0F_2:4;       // •s–¾(0)
-		unsigned int frameTime;      // ƒtƒŒ[ƒ€ŠÔ(0.01•b’PˆÊ)
-		unsigned int frameRate;      // ƒtƒŒ[ƒ€ƒŒ[ƒg(0.01fps’PˆÊ)
-		unsigned int r18;            // •s–¾(0)
-		unsigned int r1C;            // •s–¾(0)
+		unsigned int signature;      // ã‚·ã‚°ãƒãƒãƒ£ 'CRID'
+		unsigned int dataSize;       // ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
+		unsigned char r08;           // ä¸æ˜(0)
+		unsigned char dataOffset;    // ãƒ‡ãƒ¼ã‚¿ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+		unsigned short paddingSize;  // ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°ã‚µã‚¤ã‚º
+		unsigned char chno;          // ä¸æ˜(0)
+		unsigned char r0D;           // ä¸æ˜(0)
+		unsigned char r0E;           // ä¸æ˜(0)
+		unsigned char dataType:2;    // ãƒ‡ãƒ¼ã‚¿ã®ç¨®é¡ 0:Data 1:UTF(ãƒ¡ã‚¿æƒ…å ±) 2:Comment 3:UTF(ã‚·ãƒ¼ã‚¯æƒ…å ±)
+		unsigned char r0F_1:2;       // ä¸æ˜(0)
+		unsigned char r0F_2:4;       // ä¸æ˜(0)
+		unsigned int frameTime;      // ãƒ•ãƒ¬ãƒ¼ãƒ æ™‚é–“(0.01ç§’å˜ä½)
+		unsigned int frameRate;      // ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆ(0.01fpså˜ä½)
+		unsigned int r18;            // ä¸æ˜(0)
+		unsigned int r1C;            // ä¸æ˜(0)
 	};
 	clUTF _utf;
 	unsigned char _videoMask1[0x20];
